@@ -1,0 +1,48 @@
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Deseja sair do i3? Isso encerrará sua sessão do X.' -b 'Me deixe ir' 'i3-msg exit'
+
+#### POLYBAR LOAD ####
+exec_always --no-startup-id ~/.i3/polybar.sh &
+######################
+
+###### WIFI APPLET #####
+exec --no-startup-id nm-applet &
+########################
+
+###### BLUETOOTH APPLET #####
+#exec --no-startup-id sleep1 && blueman-applet &
+########################
+
+###### SCREENLOCK ######
+exec --no-startup-id xautolock -time 10 -locker lock 
+
+#atalho para screenlock
+bindsym $mod+Control+l exec --no-startup-id /bin/lock
+########################
+
+###### ALASAMIXER ######
+bindsym $mod+Control+a exec --no-startup-id urxvt -name "alsamixer" -e 'alsamixer' 
+#; mode "default" for_window[class="alsamixer"] floating enable
+########################
+
+
+############ OPITIONS FOR QUICK LOCK, SUSPEND OR HIBERNATE ######################
+set $Locker /bin/lock && sleep 1
+
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"  
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Pause mode "$mode_system"
+##################################################################
+

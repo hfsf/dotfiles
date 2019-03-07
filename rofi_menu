@@ -1,0 +1,1 @@
+rofi -show run -line 3 -eh 2 -width 25 -padding 40 -opacity "75" -fg "#505050" -bg "#000000" -hlfg "#ffb964" -hlbg "#000000" -font "Inconsolata 9"
